@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ИльЯкласс Демо · учитель</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: linear-gradient(145deg, #0b1e2f, #1e3a5f, #153448);
+            padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(20px, 4vw, 40px);
+            flex-wrap: wrap;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: min(60px, 8vw);
+            padding: clamp(15px, 3vw, 20px) clamp(20px, 4vw, 30px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            background: linear-gradient(135deg, #a8ede0, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            word-break: break-word;
+        }
+        .role-badge {
+            background: #007aff;
+            color: white;
+            padding: clamp(8px, 2vw, 10px) clamp(20px, 4vw, 30px);
+            border-radius: 40px;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,122,255,0.3);
+            white-space: nowrap;
+        }
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 25px);
+            border-radius: 40px;
+            background: rgba(255,255,255,0.1);
+            transition: 0.2s;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        .back-btn:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(0.98);
+        }
+        .section {
+            margin-bottom: clamp(30px, 6vw, 50px);
+        }
+        .section-title {
+            color: white;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: clamp(15px, 3vw, 25px);
+            padding-left: 15px;
+            border-left: 6px solid #007aff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            word-break: break-word;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+            gap: clamp(15px, 3vw, 25px);
+        }
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: min(30px, 6vw);
+            padding: clamp(20px, 4vw, 25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: 0.3s;
+        }
+        .quiz-card:active {
+            transform: translateY(-2px);
+            border-color: #007aff;
+            background: rgba(255,255,255,0.1);
+        }
+        .quiz-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 600;
+            margin-bottom: 15px;
+            word-break: break-word;
+        }
+        .quiz-link {
+            display: inline-block;
+            margin: 10px 0;
+            color: #a8ede0;
+            text-decoration: none;
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+            word-break: break-all;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .teacher-btn {
+            display: inline-block;
+            background: #007aff;
+            color: white;
+            text-decoration: none;
+            padding: clamp(10px, 2.5vw, 12px) clamp(15px, 3vw, 25px);
+            border-radius: 40px;
+            font-weight: 600;
+            margin-top: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+            text-align: center;
+            width: 100%;
+            transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+        .teacher-btn:active {
+            background: #0051d5;
+            transform: scale(0.98);
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            body {
+                background-attachment: scroll;
+            }
+            .quiz-card, .header {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(145deg, #0a1725, #152f47);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .role-badge, .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <h1>📚 ИльяКласс Демо</h1>
+            </div>
+            <div class="role-badge">👨‍🏫 Учитель</div>
+            <a href="index.html" class="back-btn">← На главную</a>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📚 Доступные викторины</h2>
+            <div class="quiz-grid">
+                <div class="quiz-card">
+                    <div class="quiz-title">🌸 8 марта</div>
+                    <div class="quiz-link">ilyasigma111.github.io/8marta-quiz/</div>
+                    <a href="https://ilyasigma111.github.io/8marta-quiz/teacher.html" class="teacher-btn" target="_blank">
+                        👨‍🏫 Открыть учительскую →
+                    </a>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-title">🔐 Кибербезопасность</div>
+                    <div class="quiz-link">ilyasigma111.github.io/cybersecurity-quiz/</div>
+                    <a href="https://ilyasigma111.github.io/cybersecurity-quiz/teacher.html" class="teacher-btn" target="_blank">
+                        👨‍🏫 Открыть учительскую →
+                    </a>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-title">🍌 Бананы</div>
+                    <div class="quiz-link">ilyasigma111.github.io/bananasTEST/</div>
+                    <a href="https://ilyasigma111.github.io/bananasTEST/teacher.html" class="teacher-btn" target="_blank">
+                        👨‍🏫 Открыть учительскую →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
