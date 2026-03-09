@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ИльЯкласс Демо · вход</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .card {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 48px 32px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            margin-bottom: 16px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+            word-break: break-word;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            margin-bottom: 50px;
+            opacity: 0.95;
+            padding: 0 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: clamp(15px, 3vw, 25px);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: clamp(16px, 4vw, 22px) clamp(30px, 6vw, 50px);
+            border-radius: 60px;
+            font-size: clamp(1.3rem, 5vw, 2rem);
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            min-width: clamp(200px, 40vw, 260px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn-student {
+            background: rgba(52, 199, 89, 0.2);
+        }
+
+        .btn-student:hover, .btn-student:active {
+            background: #34c759;
+            transform: scale(1.02);
+            border-color: white;
+            box-shadow: 0 20px 30px rgba(52,199,89,0.4);
+        }
+
+        .btn-teacher {
+            background: rgba(0, 122, 255, 0.2);
+        }
+
+        .btn-teacher:hover, .btn-teacher:active {
+            background: #007aff;
+            transform: scale(1.02);
+            border-color: white;
+            box-shadow: 0 20px 30px rgba(0,122,255,0.4);
+        }
+
+        /* Пасхалка — незаметная кнопка в углу */
+        .easter-egg {
+            position: fixed;
+            bottom: clamp(10px, 3vw, 20px);
+            right: clamp(10px, 3vw, 20px);
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0.1;
+            transition: opacity 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 999;
+        }
+
+        .easter-egg:hover, .easter-egg:active {
+            opacity: 0.3;
+        }
+
+        .easter-egg::before {
+            content: "🥚";
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Модальное окно пасхалки */
+        .egg-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .egg-content {
+            max-width: 500px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 48px;
+            padding: 40px 30px;
+            text-align: center;
+            color: #333;
+            animation: eggPop 0.3s ease;
+        }
+
+        @keyframes eggPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .egg-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .egg-content p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .egg-close {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 25px;
+            cursor: pointer;
+            width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .egg-close:active {
+            transform: scale(0.98);
+            background: #5a6fd8;
+        }
+
+        /* Для iPhone и Safari */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                background-attachment: scroll;
+            }
+            
+            .btn {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+        }
+
+        /* Защита от отбеливания на iPhone */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #4a5bb3 0%, #593a7a 100%);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 32px 20px;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+            
+            .easter-egg {
+                bottom: 5px;
+                right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📚 ИльяКласс</h1>
+        <div class="subtitle">упрощённая демо-версия для презентаций</div>
+        <div class="buttons">
+            <a href="student.html" class="btn btn-student">🧑‍🎓 Ученик</a>
+            <a href="teacher.html" class="btn btn-teacher">👨‍🏫 Учитель</a>
+        </div>
+    </div>
+
+    <!-- Пасхалка -->
+    <button class="easter-egg" id="easterEgg" aria-label="пасхалка"></button>
+
+    <!-- Модальное окно пасхалки -->
+    <div class="egg-modal" id="eggModal">
+        <div class="egg-content">
+            <h2>🥚 Пасхалка найдена!</h2>
+            <p>Это <strong>ИльЯкласс Демо</strong> — ироничная упрощённая версия для презентаций.</p>
+            <p>Репозиторий проекта:<br>
+            <strong>ilyasigma111/ilyaklass-demo</strong></p>
+            <p>На самом деле здесь ничего секретного нет,<br>просто красивая кнопка 🎭</p>
+            <button class="egg-close" id="closeEgg">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const eggBtn = document.getElementById('easterEgg');
+        const eggModal = document.getElementById('eggModal');
+        const closeBtn = document.getElementById('closeEgg');
+
+        eggBtn.addEventListener('click', () => {
+            eggModal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            eggModal.style.display = 'none';
+        });
+
+        eggModal.addEventListener('click', (e) => {
+            if (e.target === eggModal) {
+                eggModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
