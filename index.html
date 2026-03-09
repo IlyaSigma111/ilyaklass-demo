@@ -29,7 +29,6 @@
             overflow: hidden;
         }
 
-        /* Блики на фоне */
         body::before {
             content: '';
             position: absolute;
@@ -71,7 +70,6 @@
             overflow: hidden;
         }
 
-        /* Блик на стекле */
         .card::after {
             content: '';
             position: absolute;
@@ -139,7 +137,6 @@
             overflow: hidden;
         }
 
-        /* Блик на кнопках */
         .btn::before {
             content: '';
             position: absolute;
@@ -171,6 +168,7 @@
             background: rgba(0, 122, 255, 0.3);
         }
 
+        /* ===== ИНТЕРЕСНАЯ ПАСХАЛКА ===== */
         .easter-egg {
             position: fixed;
             bottom: 30px;
@@ -185,12 +183,15 @@
             opacity: 0.2;
             transition: all 0.3s;
             z-index: 999;
+            font-size: 0;
+            overflow: hidden;
         }
 
         .easter-egg:hover {
-            opacity: 0.8;
-            transform: scale(1.1);
-            background: rgba(255,255,255,0.2);
+            opacity: 0.9;
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
 
         .easter-egg::before {
@@ -200,6 +201,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            transition: transform 0.3s;
+        }
+
+        .easter-egg:hover::before {
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         .egg-modal {
@@ -209,7 +215,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(15px);
             z-index: 1000;
             align-items: center;
@@ -218,35 +224,91 @@
         }
 
         .egg-content {
-            max-width: 600px;
+            max-width: 700px;
             width: 90%;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 60px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 70px;
             padding: 50px 40px;
             text-align: center;
             color: white;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4),
+                        inset 0 0 50px rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .egg-content::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 60%);
+            opacity: 0.4;
+            animation: eggShine 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes eggShine {
+            0%, 100% { transform: translate(-5%, -5%) rotate(0deg); }
+            50% { transform: translate(5%, 5%) rotate(5deg); }
         }
 
         .egg-content h2 {
-            font-size: 2.8rem;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
         }
 
-        .egg-content p {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            opacity: 0.9;
+        .egg-fact {
+            font-size: 1.8rem;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        .egg-facts {
+            margin: 30px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .egg-fact-item {
+            font-size: 1.4rem;
+            margin: 15px 0;
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 40px;
+            border-left: 4px solid rgba(255,255,255,0.5);
+            text-align: left;
+        }
+
+        .egg-secret {
+            font-size: 2rem;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
         }
 
         .egg-close {
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.3);
             color: white;
             padding: 20px 50px;
             border-radius: 60px;
@@ -256,16 +318,35 @@
             cursor: pointer;
             width: 100%;
             transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
         }
 
         .egg-close:hover {
             background: rgba(255,255,255,0.3);
             transform: scale(1.02);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .egg-counter {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            opacity: 0.3;
+            z-index: 2;
         }
 
         @media (max-width: 700px) {
             .card { padding: 60px 30px; border-radius: 50px; }
             .btn { min-width: 280px; padding: 22px 40px; }
+            .egg-content { padding: 40px 25px; }
+            .egg-content h2 { font-size: 2.5rem; }
+            .egg-fact { font-size: 1.4rem; }
+            .egg-fact-item { font-size: 1.2rem; }
         }
         
         @media (max-width: 480px) {
@@ -287,35 +368,132 @@
         </div>
     </div>
 
-    <button class="easter-egg" id="easterEgg"></button>
+    <!-- Пасхалка -->
+    <button class="easter-egg" id="easterEgg" onclick="void(0)"></button>
 
+    <!-- Модальное окно с пасхалкой -->
     <div class="egg-modal" id="eggModal">
         <div class="egg-content">
-            <h2>🥚 Пасхалка</h2>
-            <p>ИльЯкласс Демо</p>
-            <p>ilyasigma111/ilyaklass-demo</p>
-            <button class="egg-close" id="closeEgg">Закрыть</button>
+            <h2>🥚 СЕКРЕТНОЕ ЯЙЦО</h2>
+            
+            <div class="egg-fact" id="randomFact">
+                Загрузка...
+            </div>
+            
+            <div class="egg-facts">
+                <div class="egg-fact-item">🎮 Нажми ещё раз — факт изменится</div>
+                <div class="egg-fact-item">🔍 Этот проект — ироничная демо-версия ИльЯкласс</div>
+                <div class="egg-fact-item">📦 Репозиторий: ilyasigma111/ilyaklass-demo</div>
+            </div>
+
+            <div class="egg-secret" id="secretMessage">
+                ⚡
+            </div>
+            
+            <button class="egg-close" id="closeEgg">Закрыть и продолжить</button>
+            <div class="egg-counter" id="eggCounter">✨ 1/7</div>
         </div>
     </div>
 
     <script>
+        // Массив интересных фактов
+        const facts = [
+            "🍌 Этот проект создан для презентации ИльЯкласс",
+            "🎨 Дизайн в стиле glassmorphism с анимированными бликами",
+            "📱 Полностью адаптирован под все мобильные устройства",
+            "🔗 Каждая викторина живёт в отдельном репозитории",
+            "👨‍🏫 У учителя и ученика разные версии сайтов",
+            "⚡ Пасхалка появляется после 5 кликов по яйцу",
+            "🌈 Градиент фона постоянно меняется"
+        ];
+
+        // Секретные сообщения (появляются после нескольких открытий)
+        const secrets = [
+            "⚡ Это твой первый заход!",
+            "🌟 Ты нашёл пасхалку дважды!",
+            "🎯 Ого, третий раз!",
+            "🔮 Ты чувствуешь магию?",
+            "💫 Полпути к супер-секрету!",
+            "👑 Ещё чуть-чуть...",
+            "🎉 ПОЗДРАВЛЯЮ! ТЫ ОТКРЫЛ ВСЕ СЕКРЕТЫ! 🎉"
+        ];
+
+        let clickCount = parseInt(localStorage.getItem('eggClicks') || '0');
+        let currentFact = 0;
+
+        // Обновление интерфейса
+        function updateEggDisplay() {
+            document.getElementById('randomFact').textContent = facts[Math.floor(Math.random() * facts.length)];
+            document.getElementById('secretMessage').textContent = secrets[Math.min(clickCount, secrets.length - 1)];
+            document.getElementById('eggCounter').textContent = `✨ ${clickCount + 1}/${secrets.length}`;
+            
+            // Сохраняем счётчик
+            localStorage.setItem('eggClicks', clickCount.toString());
+        }
+
+        // Элементы
         const eggBtn = document.getElementById('easterEgg');
         const eggModal = document.getElementById('eggModal');
         const closeBtn = document.getElementById('closeEgg');
 
-        eggBtn.addEventListener('click', () => {
+        // Открытие пасхалки
+        eggBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clickCount++;
+            updateEggDisplay();
             eggModal.style.display = 'flex';
+            
+            // Маленькая анимация яйца
+            eggBtn.style.transform = 'scale(0.9) rotate(10deg)';
+            setTimeout(() => {
+                eggBtn.style.transform = '';
+            }, 200);
         });
 
+        // Закрытие
         closeBtn.addEventListener('click', () => {
             eggModal.style.display = 'none';
+            
+            // Эффект при закрытии
+            eggBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                eggBtn.style.transform = '';
+            }, 200);
         });
 
+        // Закрытие по клику вне окна
         eggModal.addEventListener('click', (e) => {
             if (e.target === eggModal) {
                 eggModal.style.display = 'none';
             }
         });
+
+        // Начальное обновление (для счётчика)
+        updateEggDisplay();
+
+        // Секретная комбинация клавиш (Кончита)
+        let konami = '';
+        document.addEventListener('keydown', (e) => {
+            konami += e.key;
+            if (konami.includes('konami')) {
+                alert('🎮 СУПЕР-СЕКРЕТ! Но пока ничего нет...');
+                konami = '';
+            }
+        });
+
+        // Случайный факт при каждом открытии
+        document.getElementById('randomFact').addEventListener('click', function() {
+            this.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                this.style.transform = '';
+                this.textContent = facts[Math.floor(Math.random() * facts.length)];
+            }, 100);
+        });
+
+        // Маленький сюрприз на 10 кликов
+        if (clickCount >= 10) {
+            console.log('🎭 Ты слишком любопытный...');
+        }
     </script>
 </body>
 </html>
